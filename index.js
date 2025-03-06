@@ -12,7 +12,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",  // ✅ Allow local frontend
-  "https://your-frontend-domain.vercel.app" // ✅ Allow deployed frontend
+  "https://mobile-finance.netlify.app" // ✅ Allow deployed frontend
 ];
 
 app.use(
