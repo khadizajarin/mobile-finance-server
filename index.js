@@ -22,17 +22,6 @@ app.use(
     credentials: true,
   })
 );
-
-
-
-app.use(
-  cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // ✅ Allow cookies & authentication headers
-  })
-);
-
 app.use(express.json());
 
 
