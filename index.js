@@ -15,15 +15,14 @@ const allowedOrigins = [
   "https://your-frontend-domain.vercel.app" // ✅ Allow deployed frontend
 ];
 
-app.use((req, res, next) => { 
-  res.header("Access-Control-Allow-Origin", "*"); 
-  res.header( "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization" ); 
-  if (req.method == "OPTIONS") { 
-    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET"); 
-    return res.status(200).json({}); 
-  } 
-  next(); 
-});
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 
 
 app.use(
@@ -39,7 +38,7 @@ app.use(express.json());
 
 
 // Database Connection
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('Error connecting to MongoDB:', error));
 
