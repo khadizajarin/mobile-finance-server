@@ -38,52 +38,6 @@ app.get("/", (req, res) => {
 
 app.use("/api", transactionRoutes);
 
-
-// POST: Login API
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  // Validate input
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email and password are required." });
-  }
-
-  try {
-    // Check if user exists
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found." });
-    }
-
-    // Verify password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid password." });
-    }
-
-    // Generate JWT token
-    const token = jwt.sign({ userId: user._id, accountType: user.accountType }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
-    res.status(200).json({
-      message: "Login successful!",
-      token,
-      accountType: user.accountType, // Return the role for routing
-      email: user.email,
-    });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ message: "Internal server error." });
-  }
-});
-
-
-
-
-
-
-
 //admin route
 const adminRoutes = require("./routes/adminRoutes");
 
